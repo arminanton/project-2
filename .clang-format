@@ -35,4 +35,8 @@ IndentAccessModifiers: false
 PointerAlignment: Left
 SortIncludes: Never
 ReflowComments: false
+AlignOperands: DontAlign
+ContinuationIndentWidth: 4
+BreakBeforeTernaryOperators: true
+BreakBeforeBinaryOperators: NonAssignment
 ...
