@@ -54,9 +54,9 @@ if(GEOPULSE_ENABLE_TESTS)
     enable_testing()
 
     add_library(Catch2Local STATIC
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests/catch2/catch_amalgamated.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/vendor/catch2/catch_amalgamated.cpp")
     target_include_directories(Catch2Local
-        PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/tests/catch2")
+        PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/tests/vendor/catch2")
 
     if(MSVC)
         target_compile_options(Catch2Local PRIVATE /Od)
@@ -65,20 +65,21 @@ if(GEOPULSE_ENABLE_TESTS)
     endif()
 
     file(GLOB_RECURSE GEOPULSE_TEST_SOURCES CONFIGURE_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/src/*.cpp")
     list(FILTER GEOPULSE_TEST_SOURCES EXCLUDE REGEX
-        ".*/tests/catch2/catch_amalgamated\\.cpp$")
+        ".*/tests/vendor/catch2/catch_amalgamated\\.cpp$")
 
     add_executable(Tests ${GEOPULSE_TEST_SOURCES})
     set_target_properties(Tests PROPERTIES OUTPUT_NAME geopulse_tests)
     target_link_libraries(Tests PRIVATE geopulse_lib Catch2Local)
     target_include_directories(Tests PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/include"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/vendor/catch2")
     target_compile_definitions(Tests PRIVATE
         GEOPULSE_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
     apply_geopulse_warnings(Tests)
 
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/tests/catch2")
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/tests/vendor/catch2")
     include(Catch)
     catch_discover_tests(Tests)
 endif()

@@ -57,7 +57,10 @@ TEST_CASE("Student source and test files respect style rules", "[style]")
         geopulse::tests::sourcePath("src"), &files
     );
     geopulse::tests::style_guard::collectFiles(
-        geopulse::tests::sourcePath("tests"), &files
+        geopulse::tests::sourcePath("tests/include"), &files
+    );
+    geopulse::tests::style_guard::collectFiles(
+        geopulse::tests::sourcePath("tests/src"), &files
     );
     REQUIRE_FALSE(files.empty());
     for (std::size_t index = 0; index < files.size(); ++index)

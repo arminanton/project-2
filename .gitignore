@@ -94,3 +94,5 @@ docs/submission/
 *.geopulse.checkpoint.json
 *.geopulse.accepted.tsv
 *.accepted.tsv
+
+skills.md
