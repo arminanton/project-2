@@ -1,7 +1,7 @@
 /* ============================================================================
  * Name:    Guilherme Armin Da Silva Anton
  * UFID:    2641-9801
- * COP3530 Project 2 - GeoPulse
+ * Project: COP3530 Project 2 - GeoPulse
  * File:    QuadTree.h
  * Purpose:    Declares a from-scratch point-region Quadtree.
  * ============================================================================
@@ -47,7 +47,7 @@ private:
         explicit Node(const core::BoundingBox& nodeBounds, int nodeDepth);
         bool isLeaf() const;
 
-        core::BoundingBox bounds; // Rectangle owned by this node.
+        core::BoundingBox bounds;        // Rectangle owned by this node.
         std::vector<core::Point> points; // Leaf points.
         std::array<std::unique_ptr<Node>, 4> children; // Kids.
         int depth = 0; // Guard against duplicate-point splits.

@@ -1,7 +1,7 @@
 /* ============================================================================
  * Name:    Guilherme Armin Da Silva Anton
  * UFID:    2641-9801
- * COP3530 Project 2 - GeoPulse
+ * Project: COP3530 Project 2 - GeoPulse
  * File:    DataLoaderRecovery.cpp
  * Purpose:    Handles completed-cache and partial-resume loader recovery.
  * ============================================================================

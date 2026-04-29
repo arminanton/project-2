@@ -1,7 +1,7 @@
 /* ============================================================================
  * Name:    Guilherme Armin Da Silva Anton
  * UFID:    2641-9801
- * COP3530 Project 2 - GeoPulse
+ * Project: COP3530 Project 2 - GeoPulse
  * File:    KDTree.h
  * Purpose:    Declares a from-scratch two-dimensional KD-tree.
  * ============================================================================
@@ -50,9 +50,9 @@ private:
     /** @brief One recursive split node in the KD-tree. */
     struct Node
     {
-        core::Point point; // Median point stored at this node.
-        int axis = 0; // Split axis: x first, then y, repeated.
-        std::unique_ptr<Node> left; // Smaller split side.
+        core::Point point;           // Median point stored at this node.
+        int axis = 0;                // Split axis: x first, then y, repeated.
+        std::unique_ptr<Node> left;  // Smaller split side.
         std::unique_ptr<Node> right; // Larger split side.
     };
 
@@ -78,7 +78,7 @@ private:
     ) const;
 
     std::unique_ptr<Node> _root; // Owns the full recursive tree.
-    std::size_t _size = 0; // Cached size for O(1) reporting.
+    std::size_t _size = 0;       // Cached size for O(1) reporting.
 };
 
 } // namespace index

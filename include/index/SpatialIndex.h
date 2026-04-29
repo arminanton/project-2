@@ -1,7 +1,7 @@
 /* ============================================================================
  * Name:    Guilherme Armin Da Silva Anton
  * UFID:    2641-9801
- * COP3530 Project 2 - GeoPulse
+ * Project: COP3530 Project 2 - GeoPulse
  * File:    SpatialIndex.h
  * Purpose:    Defines the common interface for comparable spatial indexes.
  * ============================================================================

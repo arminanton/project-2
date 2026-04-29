@@ -1,7 +1,7 @@
 /* ============================================================================
  * Name:    Guilherme Armin Da Silva Anton
  * UFID:    2641-9801
- * COP3530 Project 2 - GeoPulse
+ * Project: COP3530 Project 2 - GeoPulse
  * File:    CollisionRecord.h
  * Purpose:    Defines the accepted collision fields kept in memory.
  * ============================================================================
@@ -22,14 +22,14 @@ namespace data
 struct CollisionRecord
 {
     std::size_t sourceRowNumber = 0; // Original CSV row number.
-    std::string collisionId; // NYC collision identifier.
-    std::string crashDate; // Crash date as exported.
-    std::string crashTime; // Crash time as exported.
-    std::string borough; // Optional NYC borough value.
-    double latitude = 0.0; // Accepted latitude.
-    double longitude = 0.0; // Accepted longitude.
-    int personsInjured = 0; // Parsed injury count.
-    int personsKilled = 0; // Parsed fatality count.
+    std::string collisionId;         // NYC collision identifier.
+    std::string crashDate;           // Crash date as exported.
+    std::string crashTime;           // Crash time as exported.
+    std::string borough;             // Optional NYC borough value.
+    double latitude = 0.0;           // Accepted latitude.
+    double longitude = 0.0;          // Accepted longitude.
+    int personsInjured = 0;          // Parsed injury count.
+    int personsKilled = 0;           // Parsed fatality count.
 };
 
 } // namespace data
