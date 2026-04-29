@@ -1,0 +1,184 @@
+% ========================================
+% Name: Guilherme Armin Da Silva Anton
+% UFID: 2641-9801
+% COP3530 Project 2 - GeoPulse
+% File: Report.tex
+% Purpose: Source for the final GeoPulse Project 2 report.
+% ========================================
+\documentclass[12pt]{article}
+\usepackage[margin=0.55in]{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=black}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlist{nosep,leftmargin=*}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+\titlespacing*{\subsection}{0pt}{4pt}{2pt}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\begin{document}
+
+\begin{titlepage}
+\centering
+{\Large University of Florida COP3530 Project 2\par}
+\vspace{0.4in}
+{\Huge\bfseries GeoPulse\par}
+\vspace{0.2in}
+{\Large Spatial Index Benchmarking for NYC Collision Data\par}
+\vfill
+\begin{tabular}{ll}
+Team Name: & GeoPulse Solo Team\\
+Team Member: & Guilherme Armin Da Silva Anton\\
+UFID: & 2641-9801\\
+GitHub Username: & arminanton\\
+Repository: & \url{https://github.com/arminanton/project-2}\\
+Video Demo: & \url{https://youtu.be/REPLACE_WITH_FINAL_VIDEO}\\
+Language: & C++14\\
+Submission: & Final group deliverable report\\
+\end{tabular}
+\vfill
+\textbf{Summary.} GeoPulse compares Linear Scan, KD-tree, and Quadtree
+spatial search over the NYC Motor Vehicle Collisions dataset. The two
+non-trivial comparable structures implemented from scratch are the KD-tree and
+Quadtree; Linear Scan is retained as the correctness oracle and baseline.
+\end{titlepage}
+
+\section{Extended and Refined Proposal}
+\textbf{Problem.} NYC collision data contains millions of records, but raw CSV
+search does not make spatial questions easy. GeoPulse asks: how much faster do
+spatial data structures answer location-based collision queries than a brute
+force scan?\newline
+\textbf{Motivation.} Transportation analysts, students, and residents may want
+to ask questions such as ``what crash is closest to this location?'' or ``how
+many crashes happened within half a mile?'' A spatial index can reduce repeated
+query cost after one build step.\newline
+\textbf{Features implemented.} GeoPulse loads and validates CSV data, stores
+accepted collisions in memory, builds three indexes, runs nearest-neighbor,
+radius, and rectangular range queries, verifies KD-tree and Quadtree answers
+against Linear Scan, and prints a benchmark report. Recovery mode writes a
+checkpoint and accepted-record cache so interrupted CSV loads can resume.\newline
+\textbf{Data.} The public dataset is NYC Open Data's Motor Vehicle Collisions
+Crashes table, export id \texttt{h9gi-nx95}. The uploaded snapshot contains
+2,246,476 CSV rows and 29 columns. GeoPulse accepts 2,005,745 rows after strict
+numeric latitude/longitude validation; 240,625 rows are missing coordinates and
+106 contain non-empty invalid coordinates.\newline
+\textbf{Tools.} The implementation uses C++14, CMake, Catch2, Git/GitHub,
+Git LFS-ready data layout, VS Code and CLion project settings, optional
+clang-format, clang-tidy, and cpplint. No library KD-tree or Quadtree is used.\newline
+\textbf{Algorithms implemented.} Linear Scan checks every point and is used as
+the oracle. KD-tree recursively chooses medians on alternating x/y axes. Quadtree
+recursively partitions the bounding rectangle into four quadrants.\newline
+\textbf{Additional structures.} Shared records/points vectors avoid duplicate
+metadata in tree nodes. Bounding boxes support pruning. Result normalization
+sorts ids before set comparison.\newline
+\textbf{Role distribution.} This was completed as a solo project. I performed
+proposal refinement, architecture, data ingestion, algorithms, testing,
+benchmarking, documentation, and packaging.
+
+\section{Architecture and Design Decisions}
+The code follows single-responsibility modules: \texttt{core} owns geometry and
+constants; \texttt{data} owns CSV parsing, validation, loading, and recovery;
+\texttt{index} owns the three comparable spatial structures; \texttt{query}
+owns coordinate-facing query helpers; \texttt{benchmark} owns timing and
+correctness comparison; \texttt{app/ui} owns output and command dispatch.
+\texttt{main.cpp} only creates \texttt{CliApplication} and delegates.
+
+The major post-proposal refinement was adding a stricter loader. The proposal
+counted rows with non-empty coordinates; the final code accepts only finite,
+numeric, legal latitude/longitude values. I also added quoted-newline CSV
+support after discovering that a physical-line parser can miscount this dataset.
+Recovery was designed with an accepted-record cache because a byte offset alone
+cannot restore records that were already parsed before a restart.
+
+\begin{center}
+\begin{tabular}{L{1.3in}L{2.1in}L{2.0in}}
+\toprule
+Structure & Representation & Reason \\
+\midrule
+Linear Scan & Non-owning pointer to all points & Simple oracle; every result is exact.\\
+KD-tree & Unique-pointer binary nodes with axis field & Median partitions improve average repeated query time.\\
+Quadtree & Unique-pointer quadrant nodes with capacity/depth limits & Spatial boxes give intuitive radius/range pruning.\\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+\section{Complexity Analysis}
+Let $N$ be indexed points and $K$ be returned matches. Worst cases remain
+linear when data is adversarial, duplicate-heavy, or the query covers most of the
+map.
+
+\begin{center}
+\small
+\begin{tabular}{L{2.1in}L{1.45in}L{2.85in}}
+\toprule
+Command / method & Worst-case & Explanation \\
+\midrule
+\texttt{--data / DataLoader::load} & $O(N)$ & Streams each CSV row once.\\
+\texttt{LinearScan::build} & $O(1)$ & Stores a reference to the point vector.\\
+\texttt{LinearScan::nearest} & $O(N)$ & Checks every accepted point.\\
+\texttt{LinearScan::radiusQuery} & $O(N)$ & Checks every distance.\\
+\texttt{LinearScan::rangeQuery} & $O(N)$ & Checks every bounding-box containment.\\
+\texttt{KDTree::build} & $O(N\log N)$ avg, $O(N^2)$ worst & Median selection per level.\\
+\texttt{KDTree::nearest} & $O(N)$ & Branch pruning may fail.\\
+\texttt{KDTree::radiusQuery} & $O(N+K)$ & Large circles can touch all branches.\\
+\texttt{KDTree::rangeQuery} & $O(N+K)$ & Large boxes can touch all branches.\\
+\texttt{QuadTree::build} & $O(N\log N)$ avg, $O(ND)$ worst & $D$ is max depth.\\
+\texttt{QuadTree::nearest} & $O(N)$ & Box pruning may fail.\\
+\texttt{QuadTree::radiusQuery} & $O(N+K)$ & Large circles can touch all nodes.\\
+\texttt{QuadTree::rangeQuery} & $O(N+K)$ & Large boxes can touch all nodes.\\
+\texttt{BenchmarkRunner::run} & $O(N\log N+QN)$ & Includes baseline correctness checks.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Testing, Tooling, and Output}
+Catch2 tests cover argument validation, exact public sample output, quoted
+CSV fields, data-loader row counts, recovery cache reuse, geometry, empty-index
+behavior, negative radius behavior, deterministic nearest ties, KD-tree and
+Quadtree correctness against Linear Scan, benchmark correctness flags, and a
+style guard for student files outside Catch2. The public
+sample output is deterministic:
+\begin{verbatim}
+Dataset summary
+total rows: 8
+accepted coordinate rows: 6
+excluded rows: 2
+missing-coordinate rows: 1
+invalid-coordinate rows: 1
+\end{verbatim}
+
+Local quality tooling includes CMake targets \texttt{Main} and \texttt{Tests},
+configure-time sample data copying, GitHub settings, branch-safe hooks, Git LFS
+attributes for snapshots, VS Code and CLion settings, \texttt{.clang-format}
+for Allman braces and 80 columns, and \texttt{.clang-tidy} with analyzer,
+bugprone, performance, readability, and modernize checks. Disabled tidy checks
+are documented as style conflicts: trailing return types are not used in this
+beginner-friendly C++14 code, auto is not forced, magic numbers are handled by
+shared constants and tests, and identifier-length warnings conflict with common
+loop/index names.
+
+\section{Reflection and Lessons Learned}
+Working solo meant all architecture, implementation, testing, and reporting had
+to stay highly organized. The most important challenge was not writing the tree
+code itself; it was making all structures comparable under the same distance
+model and proving correctness against a baseline. Another challenge was the CSV
+format: quoted newlines made it clear that robust data ingestion matters before
+benchmarking can be trusted.
+
+If I restarted the project, I would implement the public facade, exact sample
+outputs, and style guard even earlier. I learned how to separate domain records
+from lightweight index points, why recovery needs persisted accepted records,
+how KD-tree and Quadtree pruning differ, and why benchmarks must verify answers
+before interpreting speed.
+
+\section{References}
+NYC Open Data. \emph{Motor Vehicle Collisions - Crashes}, dataset id
+\texttt{h9gi-nx95}.\newline
+University of Florida COP3530 Project 2 assignment description and rubric.\newline
+Catch2 unit testing framework documentation.
+
+\end{document}

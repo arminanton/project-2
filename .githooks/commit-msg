@@ -1,0 +1,20 @@
+#!/bin/bash
+set -euo pipefail
+
+commit_msg=$(cat "$1")
+pattern="^(feat|fix|redo|docs|test|chore|perf|vuls)(\(.*\))?: .+ \(Issue #[0-9]+\)$"
+
+if [[ ! $commit_msg =~ $pattern ]]; then
+    echo "============================================================"
+    echo " ❌ ERROR: Invalid commit message format."
+    echo "------------------------------------------------------------"
+    echo " Your commit message must strictly follow this format:"
+    echo " <type>: <short description> (Issue #<number>)"
+    echo ""
+    echo " Allowed types: feat, fix, redo, docs, test, chore, perf, vuls"
+    echo " Example: feat: implement CSV parsing logic (Issue #2)"
+    echo "============================================================"
+    exit 1
+fi
+
+exit 0

@@ -1,0 +1,38 @@
+# ========================================
+# Name: Guilherme Armin Da Silva Anton
+# UFID: 2641-9801
+# COP3530 Project 2 - GeoPulse
+# File: .clang-format
+# Purpose: Defines the local C++ formatting style.
+# ========================================
+---
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++14
+ColumnLimit: 80
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Allman
+NamespaceIndentation: None
+CompactNamespaces: false
+FixNamespaceComments: true
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: None
+PenaltyReturnTypeOnItsOwnLine: 1000000
+AlignAfterOpenBracket: BlockIndent
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: true
+BreakConstructorInitializers: AfterColon
+SpaceBeforeCtorInitializerColon: true
+PackConstructorInitializers: Never
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+PointerAlignment: Left
+SortIncludes: Never
+ReflowComments: false
+...

@@ -1,0 +1,96 @@
+# Build directories
+/build/
+/cmake-build-*/
+/.cache/
+
+# CMake generated files
+/CMakeCache.txt
+/CMakeFiles/
+/compile_commands.json
+/cmake_install.cmake
+/CTestTestfile.cmake
+/Makefile.user
+
+# Executables and libraries
+/bin/
+/lib/
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# Test and coverage artifacts
+/Testing/
+*.gcno
+*.gcda
+*.gcov
+*.profraw
+*.profdata
+coverage/
+
+# IDE and editor files
+.DS_Store
+**/.DS_Store
+.idea/*
+!.idea/.gitignore
+!.idea/codeStyles/
+!.idea/codeStyles/Project.xml
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/editor.xml
+!.idea/misc.xml
+!.idea/modules.xml
+!.idea/vcs.xml
+!.idea/*.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+!.vscode/launch.json
+*.swp
+*.swo
+
+# Logs and runtime artifacts
+*.log
+logs/
+tmp/
+
+# Local formatter and linter scratch files
+.clang-tidy-cache/
+
+# Local archives
+*.zip
+
+# Large local datasets and checkpoints
+data/local/*
+*.checkpoint.json
+*.progress.json
+*.resume.json
+
+# Keep committed samples
+!data/samples/
+
+# Optional generated docs/assets
+docs/report/assets/*
+
+# Ignore .gitkeep files globally
+.gitkeep
+**/.gitkeep
+
+# Root temp files
+checkpoint_round_trip.json
+quoted_newline_test.csv
+sample_cache.tsv
+sample_checkpoint.json
+docs/submission/
+
+# Local historical replay assets
+.local-history/
+# GeoPulse recovery/cache artifacts
+*.geopulse.checkpoint.json
+*.geopulse.accepted.tsv
+*.accepted.tsv

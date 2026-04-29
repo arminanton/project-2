@@ -1,0 +1,53 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "GeoPulse: configure",
+            "type": "shell",
+            "command": "make configure",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "GeoPulse: build",
+            "type": "shell",
+            "command": "make build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "GeoPulse: test",
+            "type": "shell",
+            "command": "make test",
+            "group": "test",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "GeoPulse: format",
+            "type": "shell",
+            "command": "make format",
+            "problemMatcher": []
+        },
+        {
+            "label": "GeoPulse: lint",
+            "type": "shell",
+            "command": "make lint",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "GeoPulse: hooks",
+            "type": "shell",
+            "command": "bash scripts/setup-hooks.sh",
+            "problemMatcher": []
+        }
+    ]
+}

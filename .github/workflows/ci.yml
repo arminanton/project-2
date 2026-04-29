@@ -1,0 +1,32 @@
+name: GeoPulse CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+
+jobs:
+    build-test:
+        name: Build and test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v4
+
+            - name: Configure
+              run: >
+                  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+                  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+            - name: Build
+              run: cmake --build build --config Release --parallel 2
+
+            - name: Test
+              run: ctest --test-dir build --output-on-failure
+
+            - name: Public sample smoke output
+              run: >
+                  ./build/geopulse --data
+                  data/samples/mixed_collisions_small.csv

@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+current_branch=$(git symbolic-ref HEAD)
+
+if [ "${ALLOW_MAIN_PUSH:-0}" = "1" ]; then
+    exit 0
+fi
+
+if [ "$current_branch" = "refs/heads/main" ] || [ "$current_branch" = "refs/heads/master" ]; then
+    echo "============================================================"
+    echo " ❌ ERROR: Direct pushes to the 'main' branch are BLOCKED. "
+    echo " Use a feature branch and open a pull request."
+    echo " For the one-time bootstrap push, run with ALLOW_MAIN_PUSH=1 if needed."
+    echo "============================================================"
+    exit 1
+fi
+
+exit 0

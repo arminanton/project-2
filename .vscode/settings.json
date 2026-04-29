@@ -1,0 +1,42 @@
+{
+    "editor.formatOnSave": true,
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "C_Cpp.clang_format_style": "file",
+    "C_Cpp.clang_format_path": "clang-format",
+    "C_Cpp.default.cppStandard": "c++14",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "C_Cpp.codeAnalysis.clangTidy.path": "clang-tidy",
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "*.tpp": "cpp"
+    },
+    "cpplint.cpplintPath": "cpplint",
+    "cpplint.lineLength": 80,
+    "cpplint.excludes": [
+        "tests/catch2/**",
+        "build/**"
+    ],
+    "cpplint.filters": [
+        "-legal/copyright",
+        "-build/include_subdir"
+    ],
+    "cpplint.extensions": [
+        "h",
+        "hpp",
+        "cpp",
+        "cc",
+        "cxx"
+    ],
+    "cmake.useCMakePresets": "always",
+    "files.exclude": {
+        "**/.git": false,
+        "**/.DS_Store": false
+    },
+    "explorer.excludeGitIgnore": false
+}

@@ -1,0 +1,11 @@
+*.c
+*.cpp
+*.cc
+*.cxx
+*.h
+*.hpp
+*.hh
+*.ipp
+*.tpp
+build/
+out/

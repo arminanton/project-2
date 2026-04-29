@@ -1,0 +1,88 @@
+# .github/settings.yml
+# Using GitHub Apps > Probot Settings app by Vercel (https://probot.github.io/apps/settings/)
+
+# These settings sync to GitHub instantly when this file is merged into the default branch
+repository:
+  # General repository settings
+  private: true
+  has_issues: true
+  has_projects: false
+  has_wiki: false
+  allow_squash_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
+  default_branch: main
+
+branches:
+  # Protects the main branch
+  - name: main
+    protection:
+      # Require a pull request before merging
+      required_pull_request_reviews:
+        required_approving_review_count: 0
+        dismiss_stale_reviews: true
+
+      # Apply these rules even to repository administrators
+      enforce_admins: false
+
+      # Block force pushes and branch deletions
+      allow_force_pushes: false
+      allow_deletions: false
+
+      # Disable status checks and push restrictions for now
+      required_status_checks: null
+      restrictions: null
+
+# Labels: define labels for Issues and Pull Requests
+labels:
+  - name: feat
+    color: "0E8A16"
+    description: ":sparkles: New feature that adds user-visible or developer-visible functionality."
+  - name: fix
+    color: "D93F0B"
+    description: ":bug: Bug fix for incorrect behavior, crashes, or invalid output."
+  - name: redo
+    color: "1D76DB"
+    description: ":recycle: Structural rework or replacement of existing logic without changing intended feature scope."
+  - name: docs
+    color: "0052CC"
+    description: ":memo: Documentation change for code, workflow, design, or deliverables."
+  - name: test
+    color: "C2E0C6"
+    description: ":test_tube: Unit, integration, correctness, or regression testing work."
+  - name: chore
+    color: "FEF2C0"
+    description: ":broom: Repository maintenance, setup, housekeeping, or non-feature work."
+  - name: perf
+    color: "5319E7"
+    description: ":stopwatch: Benchmarking, profiling, or performance-oriented change."
+  - name: vuls
+    color: "B60205"
+    description: ":shield: Security or vulnerability-related hardening, validation, or mitigation."
+
+# Milestones: define milestones for Issues and Pull Requests
+milestones:
+  - title: "Milestone 0: Repository Bootstrap and Governance"
+    description: "Establish repository protections, baseline tooling, data layout, and acquisition documentation."
+    state: open
+  - title: "Milestone 1: Build Skeleton and Core Model"
+    description: "Create the CMake build skeleton, shared geometry models, and preprocessing model types."
+    state: open
+  - title: "Milestone 2: Data Ingestion, Progress, and Recovery"
+    description: "Implement the streaming CSV reader, coordinate preprocessing, progress reporting, and resume support."
+    state: open
+  - title: "Milestone 3: Baseline Index and Shared Query API"
+    description: "Define the shared spatial index interface and implement the brute-force correctness baseline."
+    state: open
+  - title: "Milestone 4: KD-Tree"
+    description: "Implement KD-tree build logic, nearest-neighbor search, and spatial queries."
+    state: open
+  - title: "Milestone 5: Quadtree"
+    description: "Implement Quadtree build logic, subdivision, nearest-neighbor behavior, and spatial queries."
+    state: open
+  - title: "Milestone 6: Benchmarking and CLI Integration"
+    description: "Integrate the CLI, benchmark runner, and end-to-end sample dataset flows."
+    state: open
+  - title: "Milestone 7: Documentation, Report Assets, and Video Prep"
+    description: "Finalize run documentation, design docs, report assets, and submission readiness."
+    state: open
